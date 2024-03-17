@@ -14,7 +14,7 @@ class FeedbackSeeder extends Seeder
     public function run(): void
     {
         Feedback::factory()
-            ->count(50000)
+            ->count(50)
             ->create();
     }
 }

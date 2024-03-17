@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('address');
             $table->string('phone');
             $table->string('email');
-            $table->foreignId('hotel_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('city_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->float('rating')->default(0);
             $table->foreignId('manager_id')->constrained('users');
             $table->timestamps();
