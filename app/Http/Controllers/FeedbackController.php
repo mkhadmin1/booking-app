@@ -2,50 +2,52 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\IFeedbackRepository;
+use App\DTO\FeedBackDTO;
+use App\Http\Resources\FeedbackResource;
 use App\Models\Feedback;
 use App\Http\Requests\StoreFeedbackRequest;
 use App\Http\Requests\UpdateFeedbackRequest;
+use App\Repositories\FeedbackRepository;
+use App\Services\CreateFeedbackService;
 
 class FeedbackController extends Controller
 {
+
+    private IFeedbackRepository $repository;
+
+    public function __construct()
+    {
+        $this->repository = new FeedbackRepository();
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return $this->repository->getFeedbacks();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreFeedbackRequest $request)
+
     {
-        //
+        $service = new CreateFeedbackService();
+        $feedback = $service->execute(FeedBackDTO::fromArray($request->validated()));
+
+        return new FeedbackResource($feedback);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Feedback $feedback)
+    public function show(int $feedbackId)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Feedback $feedback)
-    {
-        //
+        $feedback = $this->repository->getFeedbackById($feedbackId);
+        return new FeedbackResource($feedback);
     }
 
     /**
@@ -59,8 +61,7 @@ class FeedbackController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Feedback $feedback)
-    {
-        //
-    }
+
+
+
 }
