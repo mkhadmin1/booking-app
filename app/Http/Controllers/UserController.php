@@ -27,9 +27,9 @@ class UserController extends Controller
         $this->repository = new UserRepository();
     }
 
-    public function index()
+    public function index(): JsonResponse
     {
-        $users = $this->repository->getAll();
+        $users = User::all();
         return response()->json([
             'data' => $users
         ]);
