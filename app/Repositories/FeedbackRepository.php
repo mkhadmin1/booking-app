@@ -3,7 +3,8 @@
 namespace App\Repositories;
 
 use App\Contracts\IFeedbackRepository;
-use App\DTO\FeedBackDTO;
+use App\DTO\FeedbackDTO;
+use App\Http\Resources\FeedbackResource;
 use App\Models\Feedback;
 use Illuminate\Http\JsonResponse;
 
@@ -17,37 +18,62 @@ class FeedbackRepository implements IFeedbackRepository
         /** @var array $feedbacks */
         $feedbacks = Feedback::all();
 
-       return response()->json([
-           'data'=> $feedbacks
-       ]);
+        return response()->json([
+            'data' => $feedbacks
+        ]);
     }
+
     public function getFeedbackById(int $feedbackId): ?Feedback
     {
-        /** @var Feedback|null $feedback */
-        $feedback = Feedback::query()->find($feedbackId);
+
+        return Feedback::query()->find($feedbackId);
+    }
+
+    /**
+     * @param FeedbackDTO $feedbackDTO
+     * @return Feedback
+     */
+    public function createFeedback(FeedbackDTO $feedbackDTO): Feedback
+    {
+        $feedback = new Feedback();
+        $feedback->user_id = $feedbackDTO->getUserId();
+        $feedback->hotel_id = $feedbackDTO->getHotelId();
+        $feedback->description = $feedbackDTO->getDescription();
+        $feedback->rating = $feedbackDTO->getRating();
+
+        $feedback->save();
+        return $feedback;
+    }
+
+    /**
+     * @param FeedbackDTO $feedbackDTO
+     * @param int $feedbackId
+     * @return Feedback
+     */
+    public function updateFeedback(FeedbackDTO $feedbackDTO, int $feedbackId): Feedback
+    {
+        $feedback = Feedback::find($feedbackId);
+
+        $feedback->user_id = $feedbackDTO->getUserId();
+        $feedback->hotel_id = $feedbackDTO->getHotelId();
+        $feedback->description = $feedbackDTO->getDescription();
+        $feedback->rating = $feedbackDTO->getRating();
+
+        $feedback->update();
 
         return $feedback;
     }
 
-    public function createFeedback(FeedBackDTO $feedBackDTO): Feedback
+    /**
+     * @param int $feedbackId
+     * @return void
+     */
+    public function destroyFeedback(int $feedbackId)
     {
-        $feedBack = new Feedback();
-        $feedBack->user_id = $feedBackDTO->getUserId();
-        $feedBack->hotel_id = $feedBackDTO->getHotelId();
-        $feedBack->description = $feedBackDTO->getDescription();
-        $feedBack->rating = $feedBackDTO->getRating();
 
-        $feedBack->save();
-        return $feedBack;
+        $feedback = Feedback::find($feedbackId);
+        $feedback->delete();
     }
 
 
-
-//    public function getFeedbackByHotelId(int $id): ?Feedback
-//    {
-//        /** @var Feedback $feedback */
-//        $feedback = Feedback::query()->where('hotel_id', $id)->first();
-//
-//        return $feedback;
-//    }
 }

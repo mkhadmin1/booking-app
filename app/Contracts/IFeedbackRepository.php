@@ -2,7 +2,7 @@
 
 namespace App\Contracts;
 
-use App\DTO\FeedBackDTO;
+use App\DTO\FeedbackDTO;
 use App\Models\Feedback;
 use Illuminate\Http\JsonResponse;
 
@@ -19,7 +19,9 @@ interface IFeedbackRepository
      */
     public function getFeedbackById(int $feedbackId): ?Feedback;
 
-    public function createFeedback(FeedBackDTO $feedBackDTO): Feedback;
+    public function createFeedback(FeedbackDTO $feedbackDTO): Feedback;
 
-//    public function getFeedbackByHotelId(int $id): ?Feedback;
+    public function updateFeedback(FeedbackDTO $feedbackDTO, int $id): Feedback;
+
+    public function destroyFeedback(int $feedbackId);
 }

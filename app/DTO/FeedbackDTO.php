@@ -2,7 +2,7 @@
 
 namespace App\DTO;
 
-class FeedBackDTO
+class FeedbackDTO
 {
 
 
@@ -10,7 +10,7 @@ class FeedBackDTO
         private int    $user_id,
         private int    $hotel_id,
         private string $description,
-        private int $rating)
+        private int    $rating)
 
     {
     }
@@ -45,7 +45,9 @@ class FeedBackDTO
         ];
     }
 
-    public static function fromArray(array $data): static{
+    public static function fromArray(array $data): static
+    {
+//
         return new static(
             user_id: $data['user_id'],
             hotel_id: $data['hotel_id'],
