@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Contracts\ICityRepository;
 use App\Contracts\IFeedbackRepository;
+use App\Repositories\CityRepository;
 use App\Repositories\FeedbackRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,6 +16,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(IFeedbackRepository::class, FeedbackRepository::class);
+        $this->app->bind(ICityRepository::class, CityRepository::class);
     }
 
     /**

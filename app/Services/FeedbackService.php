@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Contracts\IFeedbackRepository;
 use App\DTO\FeedBackDTO;
 use App\Models\Feedback;
+use Illuminate\Http\JsonResponse;
 
 class FeedbackService
 
@@ -17,12 +18,15 @@ class FeedbackService
     }
 
 
-    public function getAllFeedbacks()
+    /**
+     * @return JsonResponse
+     */
+    public function getAllFeedbacks(): JsonResponse
     {
         return $this->repository->getFeedbacks();
     }
 
-    public function getFeedback(int $feedbackId)
+    public function getFeedback(int $feedbackId): ?Feedback
     {
         return $this->repository->getFeedbackById($feedbackId);
     }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CityController;
 use App\Http\Controllers\FeedbackController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,3 +25,10 @@ Route::get('feedbacks/{id}', [FeedbackController::class, 'show']);
 Route::post('feedbacks', [FeedbackController::class, 'store']);
 Route::put('feedbacks/{id}', [FeedbackController::class, 'update']);
 Route::delete('feedbacks/{id}', [FeedbackController::class, 'destroy']);
+
+Route::get('/cities', [CityController::class, 'index']);
+Route::get('/cities/{id}', [CityController::class, 'show']);
+Route::post('/cities', [CityController::class, 'store']);
+Route::put('/cities/{id}', [CityController::class, 'update']);
+Route::delete('/cities/{id}', [CityController::class, 'destroy']);
+Route::get('/cities/{id}/hotels', [CityController::class, 'showCityHotels']);
