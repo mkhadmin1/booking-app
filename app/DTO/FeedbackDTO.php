@@ -47,7 +47,6 @@ class FeedbackDTO
 
     public static function fromArray(array $data): static
     {
-//
         return new static(
             user_id: $data['user_id'],
             hotel_id: $data['hotel_id'],

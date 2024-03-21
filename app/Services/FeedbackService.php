@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Contracts\IFeedbackRepository;
 use App\DTO\FeedBackDTO;
 use App\Models\Feedback;
-use App\Repositories\FeedbackRepository;
 
 class FeedbackService
 
@@ -16,6 +15,7 @@ class FeedbackService
     {
         $this->repository = $repository;
     }
+
 
     public function getAllFeedbacks()
     {

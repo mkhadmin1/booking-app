@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Contracts\IFeedbackRepository;
+
 use App\DTO\FeedbackDTO;
-use App\Exceptions\InvalidFeedbackException;
 use App\Http\Resources\FeedbackResource;
-use App\Models\Feedback;
 use App\Http\Requests\StoreFeedbackRequest;
 use App\Http\Requests\UpdateFeedbackRequest;
-use App\Repositories\FeedbackRepository;
 use App\Services\FeedbackService;
-use Illuminate\Support\Facades\Lang;
 
 class FeedbackController extends Controller
 {
@@ -26,7 +22,6 @@ class FeedbackController extends Controller
      */
     public function index(FeedbackService $service)
     {
-//        $service = new FeedbackService();
         return $service->getAllFeedbacks();
     }
 
@@ -45,13 +40,9 @@ class FeedbackController extends Controller
     public function store(StoreFeedbackRequest $request, FeedbackService $service)
 
     {
-        try {
-            $feedbackDTO = $request->validated();
-            $feedback = $service->execute(FeedbackDTO::fromArray($feedbackDTO));
-            return response()->json(['message' => __('feedbacks.feedback_created_success')], 201);
-        } catch (InvalidFeedbackException $e) {
-            return throw new $e(__('feedbacks.invalid_feedback'), 400);
-        }
+        $feedbackDTO = $request->validated();
+        $service->execute(FeedbackDTO::fromArray($feedbackDTO));
+        return response()->json(['message' => __('feedbacks.feedback_created_success')], 201);
 
     }
 
@@ -61,9 +52,7 @@ class FeedbackController extends Controller
      */
     public function update(UpdateFeedbackRequest $request, $feedbackId, FeedbackService $service)
     {
-//        try {
-//            return $service->updateFeedback(FeedbackDTO::fromArray($request->validated()), $feedbackId);
-//        }
+        $service->updateFeedback(FeedbackDTO::fromArray($request->validated()), $feedbackId);
 
     }
 
