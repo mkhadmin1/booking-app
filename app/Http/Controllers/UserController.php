@@ -2,77 +2,79 @@
 
 namespace App\Http\Controllers;
 
-use App\Contracts\IUserRepository;
 use App\DTO\UserDTO;
-use App\Exceptions\BusinessExceptions;
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
-use App\Repositories\UserRepository;
-use App\Services\UserServices\CreateUserService;
+use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
 
-
-/**
- *
- */
 class UserController extends Controller
 {
-
-    private IUserRepository $repository;
-
-
     public function __construct()
     {
-        $this->repository = new UserRepository();
+        //
     }
-
-    public function index(): JsonResponse
-    {
-        $users = User::all();
-        return response()->json([
-            'data' => $users
-        ]);
-    }
-
 
     /**
-     * @param UserRequest $request
-     * @param CreateUserService $service
-     * @return UserResource
-     * @throws BusinessExceptions
+     * Display a listing of the resource.
      */
-
-    public function store(UserRequest $request, CreateUserService $service): UserResource
+    public function index(UserService $service)
     {
-        $validatedData = $request->validated();
-        $user = $service->execute(UserDTO::fromArray($validatedData));
+        return $service->getAllUsers();
+    }
 
+    /**
+     * Display the specified resource.
+     */
+    public function show(int $userId, UserService $service)
+    {
+        $user = User::query()->find($userId);
+
+        if (!$user) {
+            return response()->json(['message' => __('users.user_does_not_exist')]);
+        }
+        $user = $service->getUserById($userId);
         return new UserResource($user);
     }
 
-    public function show(int $id): UserResource
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreUserRequest $request, UserService $service)
     {
-
-        $user = $this->repository->getUserById($id);
-
-        return new UserResource($user);
+        $userDTO = $request->validated();
+        $service->createUser(UserDTO::fromArray($userDTO));
+        return response()->json(['message' => __('users.user_created_success')], 201);
     }
 
-    public function update(UserRequest $request, User $user): UserResource
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdateUserRequest $request, $userId, UserService $service)
     {
-        $validatedData = $request->validated();
+        $user = User::query()->find($userId);
 
-        $user->update($validatedData);
-
-        return new UserResource($user);
+        if (!$user) {
+            return response()->json(['message' => __('users.user_does_not_exist')]);
+        }
+        $service->updateUser(UserDTO::fromArray($request->validated()), $userId);
+        return response()->json(['message' => __('users.user_updated_success')]);
     }
 
-    public function destroy(User $user): JsonResponse
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(UserService $service, $userId): JsonResponse
     {
-        $user->delete();
+        $user = User::query()->find($userId);
 
-        return response()->json(['message' => 'Record successfully deleted']);
+        if (!$user) {
+            return response()->json(['message' => __('users.user_does_not_exist')]);
+        }
+
+        $service->destroyUser($userId);
+        return response()->json(['message' => __('users.user_deleted_success')]);
     }
 }
-

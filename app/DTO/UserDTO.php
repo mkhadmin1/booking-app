@@ -52,7 +52,7 @@ class UserDTO
             name: $data['name'],
             email: $data['email'],
             phone: $data['phone'],
-            password: $data['password'],
+            password: $data['password'] ,
 
         );
 
