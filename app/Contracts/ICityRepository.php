@@ -38,5 +38,5 @@ interface ICityRepository
      */
     public function destroyCity(int $cityId);
 
-    public function getCityHotels(int $city);
+    public function getCityHotels(int $cityId);
 }

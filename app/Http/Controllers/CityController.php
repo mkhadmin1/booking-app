@@ -27,7 +27,7 @@ class CityController extends Controller
     public function store(StoreCityRequest $request, CityService $service)
     {
         $cityDTO = $request->validated();
-        $city = $service->execute(CityDTO::fromArray($cityDTO));
+        $service->execute(CityDTO::fromArray($cityDTO));
         return response()->json(['message' => 'City created successfully'], 201);
     }
 

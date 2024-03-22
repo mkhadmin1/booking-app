@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('type');
             $table->integer('capacity');
             $table->decimal('price_per_night', 8, 2);
-            $table->boolean('is_available');
+            $table->boolean('is_available')->default(true);;
             $table->timestamps();
         });
     }
