@@ -1,6 +1,7 @@
 <?php
-
 use App\Http\Controllers\CityController;
+
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\RoomController;
 use Illuminate\Http\Request;
@@ -17,9 +18,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
+Route::get('users', [UserController::class, 'index']);
+Route::get('users/{id}', [UserController::class, 'show']);
+Route::get('users/{id}/bookings', [UserController::class, 'showUserBookings']);
+Route::get('users/{id}/feedbacks', [UserController::class, 'showUserFeedbacks']);
+Route::post('users', [UserController::class, 'store']);
+Route::match(['put', 'patch'],'users/{id}', [UserController::class, 'update']);
+Route::delete('users/{id}', [UserController::class, 'destroy']);
 
 Route::get('feedbacks', [FeedbackController::class, 'index']);
 Route::get('feedbacks/{id}', [FeedbackController::class, 'show']);
