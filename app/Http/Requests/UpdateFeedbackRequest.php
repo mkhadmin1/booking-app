@@ -11,7 +11,7 @@ class UpdateFeedbackRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class UpdateFeedbackRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'user_id' => 'sometimes|required|exists:users,id',
+            'hotel_id' => 'sometimes|required|exists:hotels,id',
+            'description' => 'sometimes|required|string',
+            'rating' => 'sometimes|required|numeric|min:1|max:5',
         ];
     }
 }
