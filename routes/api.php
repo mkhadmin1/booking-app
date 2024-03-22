@@ -1,7 +1,7 @@
 <?php
 
 
-
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\FeedbackController;
@@ -48,3 +48,10 @@ Route::post('/cities', [CityController::class, 'store']);
 Route::put('/cities/{id}', [CityController::class, 'update']);
 Route::delete('/cities/{id}', [CityController::class, 'destroy']);
 Route::get('/cities/{id}/hotels', [CityController::class, 'showCityHotels']);
+
+//Bookings
+Route::get('bookings', [BookingController::class, 'index']);
+Route::get('bookings/{id}', [BookingController::class, 'show']);
+Route::post('bookings', [BookingController::class, 'store']);
+Route::match(['put', 'patch'],'bookings/{id}', [BookingController::class, 'update']);
+Route::delete('bookings/{id}', [BookingController::class, 'destroy']);

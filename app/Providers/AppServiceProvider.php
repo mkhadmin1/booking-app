@@ -4,7 +4,9 @@ namespace App\Providers;
 
 
 
+use App\Contracts\IBookingRepository;
 use App\Contracts\IUserRepository;
+use App\Repositories\BookingRepository;
 use App\Repositories\UserRepository;
 use App\Contracts\ICityRepository;
 use App\Contracts\IFeedbackRepository;
@@ -25,6 +27,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(IFeedbackRepository::class, FeedbackRepository::class);
 
         $this->app->bind(ICityRepository::class, CityRepository::class);
+
+        $this->app->bind(IBookingRepository::class, BookingRepository::class);
 
     }
 
