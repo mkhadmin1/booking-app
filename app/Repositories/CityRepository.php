@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Contracts\ICityRepository;
 use App\DTO\CityDTO;
 use App\Http\Resources\CityResource;
+use App\Http\Resources\HotelResource;
 use App\Models\City;
 use Illuminate\Http\JsonResponse;
 
@@ -54,6 +55,6 @@ class CityRepository implements ICityRepository
             return response()->json(['message' => 'City not found'], 404);
         }
 
-        return CityResource::collection($city->hotels);
+        return HotelResource::collection($city->hotels);
     }
 }
