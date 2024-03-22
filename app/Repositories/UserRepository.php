@@ -4,6 +4,8 @@ namespace App\Repositories;
 
 use App\Contracts\IUserRepository;
 use App\DTO\UserDTO;
+use App\Http\Resources\BookingsResource;
+use App\Http\Resources\FeedbackResource;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -113,7 +115,7 @@ class UserRepository implements IUserRepository
         if (!$user) {
             return response()->json(['message' => __('users.user_does_not_exist')]);
         }
-        return UserResource::collection($user->bookings);
+        return BookingsResource::collection($user->bookings);
 
     }
 
