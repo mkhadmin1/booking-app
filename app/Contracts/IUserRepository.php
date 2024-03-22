@@ -42,4 +42,8 @@ interface IUserRepository
      */
     public function destroyUser(int $userId);
 
+    public function getUserFeedbacks(int $userId);
+    public function getUserBookings(int $userId);
+
+
 }

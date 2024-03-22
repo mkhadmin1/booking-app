@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Contracts\IUserRepository;
 use App\DTO\UserDTO;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 
 class UserService
 {
@@ -15,7 +16,7 @@ class UserService
         $this->repository = $repository;
     }
 
-    public function getAllUsers()
+    public function getAllUsers(): JsonResponse
     {
         return $this->repository->getUsers();
     }
@@ -38,5 +39,17 @@ class UserService
     public function destroyUser(int $userId)
     {
         return $this->repository->destroyUser($userId);
+    }
+
+    public function getUserBookings(int $userId)
+    {
+        return $this->repository->getUserBookings($userId);
+
+    }
+
+    public function getUserFeedbacks(int $userId)
+    {
+        return $this->repository->getUserFeedbacks($userId);
+
     }
 }

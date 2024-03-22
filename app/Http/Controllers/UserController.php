@@ -6,6 +6,8 @@ use App\DTO\UserDTO;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
+use App\Models\Booking;
+use App\Models\Feedback;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
@@ -76,5 +78,25 @@ class UserController extends Controller
 
         $service->destroyUser($userId);
         return response()->json(['message' => __('users.user_deleted_success')]);
+    }
+
+    public function showUserFeedbacks(UserService $service,int $userId)
+    {
+        $user = User::query()->find($userId);
+
+        if (!$user) {
+            return response()->json(['message' => __('users.user_does_not_exist')]);
+        }
+        return $service->getUserFeedbacks($userId);
+
+
+    }
+
+    /**
+     * Get bookings associated with the specified user.
+     */
+    public function showUserBookings(UserService $service,int $userId)
+    {
+        return $service->getUserBookings($userId);
     }
 }

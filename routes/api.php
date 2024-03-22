@@ -22,7 +22,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //Route::apiResource('users', UserController::class);
 Route::get('users', [UserController::class, 'index']);
 Route::get('users/{id}', [UserController::class, 'show']);
+Route::get('users/{id}/bookings', [UserController::class, 'showUserBookings']);
+Route::get('users/{id}/feedbacks', [UserController::class, 'showUserFeedbacks']);
 Route::post('users', [UserController::class, 'store']);
 Route::match(['put', 'patch'],'users/{id}', [UserController::class, 'update']);
 Route::delete('users/{id}', [UserController::class, 'destroy']);
+
 
