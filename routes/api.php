@@ -2,6 +2,7 @@
 
 
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\HotelController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\FeedbackController;
@@ -55,3 +56,11 @@ Route::get('bookings/{id}', [BookingController::class, 'show']);
 Route::post('bookings', [BookingController::class, 'store']);
 Route::match(['put', 'patch'],'bookings/{id}', [BookingController::class, 'update']);
 Route::delete('bookings/{id}', [BookingController::class, 'destroy']);
+
+// Hotels
+Route::get('hotels', [HotelController::class, 'index']);
+Route::get('hotels/{id}', [HotelController::class, 'show']);
+Route::post('hotels', [HotelController::class, 'store']);
+Route::match(['put', 'patch'],'hotels/{id}', [HotelController::class, 'update']);
+Route::delete('hotels/{id}', [HotelController::class, 'destroy']);
+Route::get('hotels/{id}/feedbacks', [HotelController::class, 'showHotelFeedbacks']);
