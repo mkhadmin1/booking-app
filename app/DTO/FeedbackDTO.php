@@ -5,7 +5,6 @@ namespace App\DTO;
 class FeedbackDTO
 {
 
-
     public function __construct(
         private int    $user_id,
         private int    $hotel_id,
