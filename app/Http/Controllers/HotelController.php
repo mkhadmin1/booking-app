@@ -9,6 +9,7 @@ use App\Http\Resources\FeedbackResource;
 use App\Models\Hotel;
 use App\Services\HotelService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class HotelController extends Controller
 {
@@ -98,21 +99,19 @@ class HotelController extends Controller
 
     }
 
-//    public function showHotelFeedbacks(int $hotelId, HotelService $service)
-//    {
-//        $hotel = Hotel::query()->find($hotelId);
-//
-//        if (!$hotel) {
-//            return response()->json(['message' => __('hotels.hotel_not_found')]);
-//        }
-//
-//        $feedbacks = $service->getHotelFeedbacks($hotelId);
-//
-//        if ($feedbacks->isEmpty()) {
-//            return response()->json(['message' => 'No feedbacks found for this hotel'], 404);
-//        }
-//
-//        return $service->getHotelFeedbacks($hotelId);
-//    }
+    public function availableRooms(HotelService $service, int $hotelId): JsonResponse
+    {
+        $hotel = Hotel::query()->find($hotelId);
+
+        if (!$hotel) {
+            return response()->json(['message' => __('hotels.hotel_not_found')]);
+        }
+
+        $rooms = $service->getAvailableRooms($hotelId);
+
+        return response()->json($rooms);
+    }
+
+
 
 }

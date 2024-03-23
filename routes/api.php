@@ -69,3 +69,4 @@ Route::post('hotels', [HotelController::class, 'store']);
 Route::match(['put', 'patch'],'hotels/{id}', [HotelController::class, 'update']);
 Route::delete('hotels/{id}', [HotelController::class, 'destroy']);
 Route::get('hotels/{id}/feedbacks', [HotelController::class, 'showHotelFeedbacks']);
+Route::get('hotels/{id}/available-rooms', [HotelController::class, 'availableRooms']);

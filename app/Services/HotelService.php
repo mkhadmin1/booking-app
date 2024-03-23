@@ -46,4 +46,9 @@ class HotelService
         return $this->repository->getHotelFeedbacks($hotelId);
 
     }
+
+    public function getAvailableRooms(int $hotelId)
+    {
+        return $this->repository->getAvailableRooms($hotelId);
+    }
 }

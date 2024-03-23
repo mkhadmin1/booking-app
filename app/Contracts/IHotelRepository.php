@@ -44,4 +44,5 @@ interface IHotelRepository
      */
     public function destroyHotel(int $hotelId);
     public function getHotelFeedbacks(int $hotelId);
+    public function getAvailableRooms(int $hotelId);
 }

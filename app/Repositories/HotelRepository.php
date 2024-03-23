@@ -65,15 +65,7 @@ class HotelRepository implements IHotelRepository
         $hotel->delete();
     }
 
-//    public function getHotelFeedbacks(int $hotelId)
-//    {
-//        $hotel = Hotel::query()->find($hotelId);
-//
-//        if (!$hotel) {
-//            return response()->json(['message' => __('hotels.hotel_not_found')]);
-//        }
-//        return FeedbackResource::collection($hotel->feedbacks);
-//    }
+
 
     public function getHotelFeedbacks(int $hotelId)
     {
@@ -87,7 +79,15 @@ class HotelRepository implements IHotelRepository
             return response()->json(['message' => __('hotels.no_feedbacks_available')]);
         }
 
-        return FeedbackResource::collection($feedbacks);
+        return FeedbackResource::collection($hotel->feedbacks);
+    }
+
+    public function getAvailableRooms(int $hotelId)
+    {
+        return Hotel::query()->findOrFail($hotelId)
+            ->rooms()
+            ->where('is_available', 1)
+            ->get();
     }
 
 }
