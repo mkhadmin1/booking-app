@@ -40,7 +40,6 @@ interface IBookingRepository
      * Delete a booking.
      *
      * @param int $bookingId
-     * @return mixed
      */
     public function destroyBooking(int $bookingId);
 }

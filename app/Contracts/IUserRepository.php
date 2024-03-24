@@ -2,6 +2,8 @@
 
 namespace App\Contracts;
 use App\DTO\UserDTO;
+use App\Http\Resources\BookingsResource;
+use App\Http\Resources\FeedbackResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 
@@ -31,7 +33,7 @@ interface IUserRepository
 
     /**
      * @param UserDTO $userDTO
-     * @param int $id
+     * @param int $userId
      * @return User
      */
     public function updateUser(UserDTO $userDTO, int $userId): User;
@@ -40,7 +42,7 @@ interface IUserRepository
      * @param int $userId
      * @return mixed
      */
-    public function destroyUser(int $userId);
+    public function destroyUser(int $userId): void;
 
     public function getUserFeedbacks(int $userId);
     public function getUserBookings(int $userId);

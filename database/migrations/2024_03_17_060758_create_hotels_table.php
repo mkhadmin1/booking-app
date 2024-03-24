@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('email');
             $table->foreignId('city_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->float('rating')->default(0);
-            $table->foreignId('manager_id')->constrained('users');
+            $table->foreignId('manager_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

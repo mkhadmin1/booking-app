@@ -7,5 +7,7 @@ return [
     'user_updated_success' => 'Пользователь успешно обновлён.',
     'user_deleted_success' => 'Пользователь успешно удалён.',
     'email_exists' => 'Существующий пользователь',
-    'user_does_not_exist' => 'Не существующий пользователь'
+    'user_does_not_exist' => 'Не существующий пользователь',
+    'failed_to_create_user' => 'Не удалось создать пользователя',
+    'failed_to_update_user' => 'Не удалось обновить пользователя'
 ];
