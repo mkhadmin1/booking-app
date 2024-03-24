@@ -9,6 +9,7 @@ use App\Http\Requests\StoreRoomRequest;
 use App\Http\Requests\UpdateRoomRequest;
 use App\Services\RoomService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class RoomController extends Controller
 {
@@ -58,5 +59,15 @@ class RoomController extends Controller
     {
         $service->deleteRoom($roomId);
         return response()->json(['message' => 'Room deleted successfully']);
+    }
+
+    public function showAvailableRooms(RoomService $service,Request $request)
+    {
+        $minPrice = $request->input('min_price');
+        $maxPrice = $request->input('max_price');
+
+        $availableRooms = $service->getAvailableRoomsByPriceRange($minPrice, $maxPrice);
+
+        return response()->json($availableRooms);
     }
 }

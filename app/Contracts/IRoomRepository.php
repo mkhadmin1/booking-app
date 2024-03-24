@@ -19,4 +19,5 @@ interface IRoomRepository
     public function updateRoom(int $roomId, RoomDTO $roomDTO);
 
     public function destroyRoom(int $roomId);
+    public function getAvailableRoomsByPriceRange($minPrice, $maxPrice);
 }

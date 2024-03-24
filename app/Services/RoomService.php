@@ -41,5 +41,10 @@ class RoomService
     {
         $this->repository->destroyRoom($roomId);
     }
+
+    public function getAvailableRoomsByPriceRange($minPrice, $maxPrice)
+    {
+        return $this->repository->getAvailableRoomsByPriceRange($minPrice, $maxPrice);
+    }
 }
 

@@ -50,6 +50,7 @@ Route::get('/cities/{id}/hotels', [CityController::class, 'showCityHotels']);
 
 //Rooms
 Route::get('/rooms', [RoomController::class, 'index']);
+Route::get('/rooms/available', [RoomController::class, 'showAvailableRooms']);
 Route::post('/rooms', [RoomController::class, 'store']);
 Route::get('/rooms/{id}', [RoomController::class, 'show']);
 Route::put('/rooms/{id}', [RoomController::class, 'update']);

@@ -55,4 +55,16 @@ class RoomRepository implements IRoomRepository
         $room = Room::query()->find($roomId);
         $room->delete();
     }
+
+    public function getAvailableRoomsByPriceRange($minPrice, $maxPrice)
+    {
+        return Room::query()->where('is_available', 1)
+            ->when($minPrice, function ($query) use ($minPrice) {
+                return $query->where('price_per_night', '>=', $minPrice);
+            })
+            ->when($maxPrice, function ($query) use ($maxPrice) {
+                return $query->where('price_per_night', '<=', $maxPrice);
+            })
+            ->get();
+    }
 }
