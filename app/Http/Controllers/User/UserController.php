@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
 use App\DTO\UserDTO;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
-use App\Models\Booking;
-use App\Models\Feedback;
-use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
 
@@ -20,7 +18,8 @@ class UserController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * @param UserService $service
+     * @return mixed
      */
     public function index(UserService $service)
     {
@@ -28,21 +27,19 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @param int $userId
+     * @param UserService $service
+     * @return mixed
      */
     public function show(int $userId, UserService $service)
     {
-        $user = User::query()->find($userId);
-
-        if (!$user) {
-            return response()->json(['message' => __('users.user_does_not_exist')]);
-        }
-        $user = $service->getUserById($userId);
-        return new UserResource($user);
+        return $service->getUserById($userId);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @param StoreUserRequest $request
+     * @param UserService $service
+     * @return JsonResponse
      */
     public function store(StoreUserRequest $request, UserService $service)
     {
@@ -52,50 +49,46 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @param UpdateUserRequest $request
+     * @param int $userId
+     * @param UserService $service
+     * @return JsonResponse
      */
     public function update(UpdateUserRequest $request, $userId, UserService $service)
     {
-        $user = User::query()->find($userId);
-
-        if (!$user) {
-            return response()->json(['message' => __('users.user_does_not_exist')]);
-        }
         $service->updateUser(UserDTO::fromArray($request->validated()), $userId);
         return response()->json(['message' => __('users.user_updated_success')]);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @param UserService $service
+     * @param int $userId
+     * @return JsonResponse
      */
     public function destroy(UserService $service, $userId): JsonResponse
     {
-        $user = User::query()->find($userId);
-
-        if (!$user) {
-            return response()->json(['message' => __('users.user_does_not_exist')]);
-        }
-
         $service->destroyUser($userId);
         return response()->json(['message' => __('users.user_deleted_success')]);
     }
 
-    public function showUserFeedbacks(UserService $service,int $userId)
+    /**
+     * @param UserService $service
+     * @param int $userId
+     * @return mixed
+     */
+    public function showUserFeedbacks(UserService $service, int $userId)
     {
-        $user = User::query()->find($userId);
-
-        if (!$user) {
-            return response()->json(['message' => __('users.user_does_not_exist')]);
-        }
         return $service->getUserFeedbacks($userId);
-
-
     }
 
     /**
      * Get bookings associated with the specified user.
+     *
+     * @param UserService $service
+     * @param int $userId
+     * @return mixed
      */
-    public function showUserBookings(UserService $service,int $userId)
+    public function showUserBookings(UserService $service, int $userId)
     {
         return $service->getUserBookings($userId);
     }

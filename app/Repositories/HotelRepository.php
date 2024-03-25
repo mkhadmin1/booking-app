@@ -28,7 +28,7 @@ class HotelRepository implements IHotelRepository
      */
     public function getHotelById(int $hotelId): ?Hotel
     {
-        $hotel = Hotel::query()->find($hotelId);
+        $hotel = Hotel::find($hotelId);
         if (!$hotel) {
             throw new ModelNotFoundException(__('hotels.hotel_not_found'));
         }
@@ -36,8 +36,6 @@ class HotelRepository implements IHotelRepository
     }
 
     /**
-     * Создает новый отель.
-     *
      * @param HotelDTO $hotelDTO
      * @return Hotel
      * @throws BusinessException

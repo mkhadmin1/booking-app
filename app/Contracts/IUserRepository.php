@@ -4,6 +4,7 @@ namespace App\Contracts;
 use App\DTO\UserDTO;
 use App\Http\Resources\BookingsResource;
 use App\Http\Resources\FeedbackResource;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 
@@ -15,9 +16,8 @@ interface IUserRepository
 
     /**
      * @param int $userId
-     * @return User|null
      */
-    public function getUserById(int $userId): ?User;
+    public function getUserById(int $userId): UserResource;
 
     /**
      * @param UserDTO $userDTO

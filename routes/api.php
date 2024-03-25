@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\CityController;
-use App\Http\Controllers\BookingController;
-use App\Http\Controllers\HotelController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\FeedbackController;
-use App\Http\Controllers\RoomController;
+use App\Http\Controllers\Booking\BookingController;
+use App\Http\Controllers\City\CityController;
+use App\Http\Controllers\Feedback\FeedbackController;
+use App\Http\Controllers\Hotel\HotelController;
+use App\Http\Controllers\Room\RoomController;
+use App\Http\Controllers\User\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -69,4 +69,4 @@ Route::post('hotels', [HotelController::class, 'store']);
 Route::match(['put', 'patch'],'hotels/{id}', [HotelController::class, 'update']);
 Route::delete('hotels/{id}', [HotelController::class, 'destroy']);
 Route::get('hotels/{id}/feedbacks', [HotelController::class, 'showHotelFeedbacks']);
-Route::get('hotels/{id}/available-rooms', [HotelController::class, 'availableRooms']);
+Route::get('hotels/{id}/available-rooms', [HotelController::class, 'getAvailableRooms']);

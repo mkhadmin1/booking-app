@@ -9,6 +9,7 @@ use App\Exceptions\ModelNotFoundException;
 use App\Exceptions\ModelAlreadyExistsException;
 use App\Http\Resources\BookingsResource;
 use App\Http\Resources\FeedbackResource;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 
@@ -29,16 +30,15 @@ class UserRepository implements IUserRepository
      * Get user by ID.
      *
      * @param int $userId
-     * @return User|null
      * @throws ModelNotFoundException if the user is not found
      */
-    public function getUserByID(int $userId): ?User
+    public function getUserByID(int $userId): UserResource
     {
         $user = User::query()->find($userId);
         if (!$user) {
             throw new ModelNotFoundException(__('users.user_not_found'));
         }
-        return $user;
+        return new UserResource($user);
     }
 
     /**
