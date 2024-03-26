@@ -19,10 +19,9 @@ class UserResource extends JsonResource
             'id' => $this->resource->id,
             'name' => $this->resource->name,
             'email' => $this->resource->email,
-            'password' => $this->resource->password,
             'phone' => $this->resource->phone,
-            'created_at' => $this->resource->created_at,
-            'updated_at' => $this->resource->updated_at,
+            'feedbacks' => $this->resource->whenLoaded('feedbacks'),
+            'bookings' => $this->resource->whenLoaded('bookings')
         ];
     }
 }

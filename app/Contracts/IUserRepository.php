@@ -17,7 +17,7 @@ interface IUserRepository
     /**
      * @param int $userId
      */
-    public function getUserById(int $userId): UserResource;
+    public function getUserById(int $userId): User|null;
 
     /**
      * @param UserDTO $userDTO

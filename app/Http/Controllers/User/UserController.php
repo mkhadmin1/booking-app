@@ -33,19 +33,9 @@ class UserController extends Controller
      */
     public function show(int $userId, UserService $service)
     {
-        return $service->getUserById($userId);
-    }
+        $user = $service->getUserById($userId);
 
-    /**
-     * @param StoreUserRequest $request
-     * @param UserService $service
-     * @return JsonResponse
-     */
-    public function store(StoreUserRequest $request, UserService $service)
-    {
-        $userDTO = $request->validated();
-        $service->createUser(UserDTO::fromArray($userDTO));
-        return response()->json(['message' => __('users.user_created_success')], 201);
+        return new UserResource($user);
     }
 
     /**

@@ -32,13 +32,13 @@ class UserRepository implements IUserRepository
      * @param int $userId
      * @throws ModelNotFoundException if the user is not found
      */
-    public function getUserByID(int $userId): UserResource
+    public function getUserByID(int $userId): null|User
     {
-        $user = User::query()->find($userId);
-        if (!$user) {
-            throw new ModelNotFoundException(__('users.user_not_found'));
-        }
-        return new UserResource($user);
+        $user = User::query()
+            ->with(['feedbacks', 'bookings'])
+            ->where('id', $userId)->first();
+
+        return $user;
     }
 
     /**

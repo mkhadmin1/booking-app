@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Contracts\IUserRepository;
 use App\DTO\UserDTO;
+use App\Exceptions\ModelNotFoundException;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 
@@ -23,7 +24,11 @@ class UserService
 
     public function getUserById(int $userId)
     {
-        return $this->repository->getUserById($userId);
+        $user = $this->repository->getUserById($userId);
+        if ($user === null) {
+            throw new ModelNotFoundException("User not found");
+        }
+        return $user;
     }
 
     public function createUser(UserDTO $userDTO): User
