@@ -35,7 +35,9 @@ class UserRepository implements IUserRepository
     public function getUserByID(int $userId): null|User
     {
         $user = User::query()
-            ->with(['feedbacks', 'bookings'])
+            ->with(['bookings' => function(Builder $query) {
+                $query->where('status', 'OPUBLIKOVANO');
+            }])
             ->where('id', $userId)->first();
 
         return $user;

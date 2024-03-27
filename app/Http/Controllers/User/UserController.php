@@ -31,9 +31,9 @@ class UserController extends Controller
      * @param UserService $service
      * @return mixed
      */
-    public function show(int $userId, UserService $service)
+    public function show(UserService $service)
     {
-        $user = $service->getUserById($userId);
+        $user = Auth::user();
 
         return new UserResource($user);
     }
