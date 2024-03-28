@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Feedback;
 
 use App\DTO\FeedbackDTO;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreFeedbackRequest;
-use App\Http\Requests\UpdateFeedbackRequest;
-use App\Http\Resources\FeedbackResource;
+use App\Http\Requests\Feedback\StoreFeedbackRequest;
+use App\Http\Requests\Feedback\UpdateFeedbackRequest;
 use App\Models\Feedback;
 use App\Services\FeedbackService;
 use Illuminate\Http\JsonResponse;

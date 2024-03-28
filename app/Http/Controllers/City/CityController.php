@@ -4,8 +4,8 @@ namespace App\Http\Controllers\City;
 
 use App\DTO\CityDTO;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreCityRequest;
-use App\Http\Requests\UpdateCityRequest;
+use App\Http\Requests\City\StoreCityRequest;
+use App\Http\Requests\City\UpdateCityRequest;
 use App\Http\Resources\CityResource;
 use App\Services\CityService;
 use Illuminate\Http\JsonResponse;

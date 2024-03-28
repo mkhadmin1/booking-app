@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Room;
 
 use App\DTO\RoomDTO;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreRoomRequest;
-use App\Http\Requests\UpdateRoomRequest;
+use App\Http\Requests\Room\StoreRoomRequest;
+use App\Http\Requests\Room\UpdateRoomRequest;
 use App\Http\Resources\RoomResource;
 use App\Services\RoomService;
 use Illuminate\Http\JsonResponse;

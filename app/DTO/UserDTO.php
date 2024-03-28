@@ -7,7 +7,6 @@ class UserDTO
     public function __construct(
         private readonly string $name,
         private readonly string $email,
-        private readonly string $phone,
         private readonly string $password
     )
     {
@@ -33,14 +32,6 @@ class UserDTO
     /**
      * @return string
      */
-    public function getPhone(): string
-    {
-        return $this->phone;
-    }
-
-    /**
-     * @return string
-     */
     public function getPassword(): string
     {
         return $this->password;
@@ -51,7 +42,6 @@ class UserDTO
         return new static(
             name: $data['name'],
             email: $data['email'],
-            phone: $data['phone'],
             password: $data['password'] ,
 
         );

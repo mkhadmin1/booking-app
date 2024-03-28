@@ -11,19 +11,16 @@ use Illuminate\Http\JsonResponse;
 
 interface IUserRepository
 {
-    /**@return JsonResponse */
-    public function getUsers(): JsonResponse;
-
-    /**
+     /**
      * @param int $userId
      */
-    public function getUserById(int $userId): UserResource;
+    public function getUserById(int $userId);
 
     /**
      * @param UserDTO $userDTO
      * @return User
      */
-    public function createUser(UserDTO $userDTO): User;
+    public function createUser(UserDTO $userDTO);
 
     /**
      * @param string $email
@@ -31,21 +28,7 @@ interface IUserRepository
      */
     public function getUserByEmail(string $email): ?User;
 
-    /**
-     * @param UserDTO $userDTO
-     * @param int $userId
-     * @return User
-     */
-    public function updateUser(UserDTO $userDTO, int $userId): User;
 
-    /**
-     * @param int $userId
-     * @return mixed
-     */
-    public function destroyUser(int $userId): void;
-
-    public function getUserFeedbacks(int $userId);
-    public function getUserBookings(int $userId);
 
 
 }

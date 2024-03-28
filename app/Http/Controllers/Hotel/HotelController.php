@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Hotel;
 
 use App\DTO\HotelDTO;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreHotelRequest;
-use App\Http\Requests\UpdateHotelRequest;
+use App\Http\Requests\Hotel\StoreHotelRequest;
+use App\Http\Requests\Hotel\UpdateHotelRequest;
 use App\Models\Hotel;
 use App\Services\HotelService;
 use Illuminate\Http\JsonResponse;

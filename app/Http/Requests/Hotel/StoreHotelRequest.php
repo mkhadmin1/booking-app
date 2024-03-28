@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Hotel;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateHotelRequest extends FormRequest
+class StoreHotelRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,14 +24,14 @@ class UpdateHotelRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'sometimes|string|max:255',
-            'description' => 'sometimes|string',
-            'address' => 'sometimes|string|max:255',
-            'phone' => 'sometimes|string|max:20',
-            'email' => 'sometimes|email',
-            'city_id' => 'sometimes|integer',
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'address' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'email' => 'required|email',
+            'city_id' => 'required|integer',
             'rating' => 'nullable|numeric|min:0|max:5',
-            'manager_id' => 'sometimes|integer',
+            'manager_id' => 'required|integer',
         ];
     }
 }

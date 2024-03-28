@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Booking;
 
 use App\DTO\BookingDTO;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreBookingRequest;
-use App\Http\Requests\UpdateBookingRequest;
+use App\Http\Requests\Booking\StoreBookingRequest;
+use App\Http\Requests\Booking\UpdateBookingRequest;
 use App\Models\Booking;
 use App\Services\BookingService;
 use Illuminate\Http\JsonResponse;

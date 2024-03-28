@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Booking;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreBookingRequest extends FormRequest
+class UpdateBookingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,12 @@ class StoreBookingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|exists:users,id',
-            'room_id' => 'required|exists:rooms,id',
-            'hotel_id' => 'required|exists:hotels,id',
-            'check_in' => 'required|date',
-            'check_out' => 'required|date|after:check_in',
-            'total_price' => 'required|numeric|min:0',
+            'user_id' => 'exists:users,id',
+            'room_id' => 'exists:rooms,id',
+            'hotel_id' => 'exists:hotels,id',
+            'check_in' => 'date',
+            'check_out' => 'date|after:check_in',
+            'total_price' => 'numeric|min:0',
             'status' => 'string|in:NEW,PENDING,CONFIRMED,CANCELLED',
         ];
     }

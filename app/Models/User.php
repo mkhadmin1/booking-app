@@ -13,7 +13,6 @@ use Laravel\Sanctum\HasApiTokens;
  * @property mixed|string $name
  * @property mixed|string $email
  * @property mixed|string $password
- * @property mixed|string $phone
  */
 class User extends Authenticatable
 {
@@ -21,6 +20,11 @@ class User extends Authenticatable
 
 
 
+    protected $fillable = [
+        'name',
+        'email',
+        'password'
+    ];
 
     /**
      * The attributes that are mass assignable.
