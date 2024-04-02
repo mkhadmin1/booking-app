@@ -50,12 +50,14 @@ class UserService
 
             return response()->json(['token' => $token, 'user' => new UserResource($user)], 201);
 
+
         } catch (\Exception $e) {
             throw new BusinessException(__('users.failed_to_create_user'));
         }
     }
 
-    public function login(LoginUserRequest $request) {
+    public function login(LoginUserRequest $request)
+    {
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
             $token = $user->createToken('auth_token')->plainTextToken;
@@ -66,8 +68,9 @@ class UserService
         }
     }
 
-    public function logout() {
-         Auth::user()->tokens()->delete();
+    public function logout()
+    {
+        Auth::user()->tokens()->delete();
 
         return response()->json(['message' => __('users.user_logout')], 200);
     }
