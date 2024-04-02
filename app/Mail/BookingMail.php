@@ -2,6 +2,8 @@
 
 namespace App\Mail;
 
+use App\Models\Booking;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -13,12 +15,19 @@ class BookingMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    protected $user;
+    protected $booking;
+
     /**
      * Create a new message instance.
+     *
+     * @param User $user
+     * @param Booking $booking
      */
-    public function __construct()
+    public function __construct(User $user, Booking $booking)
     {
-        //
+        $this->user = $user;
+        $this->booking = $booking;
     }
 
     /**
@@ -36,8 +45,13 @@ class BookingMail extends Mailable
      */
     public function content(): Content
     {
+        // Pass the user and booking data to the view
         return new Content(
-            view: 'view.name',
+            view: 'notification.booking', // Use dot notation to specify the view path
+            with: [
+                'user' => $this->user,
+                'booking' => $this->booking,
+            ]
         );
     }
 

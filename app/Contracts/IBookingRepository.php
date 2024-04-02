@@ -22,7 +22,7 @@ interface IBookingRepository
     public function updateBooking(Booking $booking);
 
     /**
-     * Delete a booking.
+     * Delete a booking.blade.php.
      *
      * @param int $bookingId
      */

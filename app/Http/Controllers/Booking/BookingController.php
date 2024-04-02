@@ -8,10 +8,13 @@ use App\Exceptions\ModelNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Booking\StoreBookingRequest;
 use App\Http\Requests\Booking\UpdateBookingRequest;
+use App\Mail\BookingMail;
 use App\Models\Booking;
+use App\Models\User;
 use App\Notifications\BookingNotification;
 use App\Services\BookingService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Mail;
 
 class BookingController extends Controller
 {
@@ -38,7 +41,7 @@ class BookingController extends Controller
         $bookingDTO = $request->validated();
         $service->createBooking(BookingDTO::fromArray($bookingDTO));
         $user = $request->user(); // Assuming you have authentication set up
-        $user->notify(new BookingNotification());
+        $user->notify(new BookingNotification(5));
         return response()->json(['message' => __('bookings.booking_created_success')], 201);
     }
 

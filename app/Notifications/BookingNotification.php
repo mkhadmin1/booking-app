@@ -7,6 +7,13 @@ use Illuminate\Notifications\Messages\MailMessage;
 
 class BookingNotification extends Notification
 {
+    protected $booking;
+
+    public function __construct($booking)
+    {
+        $this->booking = $booking;
+    }
+
     public function via($notifiable)
     {
         return ['mail'];
@@ -15,12 +22,8 @@ class BookingNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Booking Notification')
-            ->line('Your booking has been successfully created.');
-//            ->line('Booking ID: ' . $this->booking->id)
-//            ->line('Booking Date: ' . $this->booking->created_at->format('Y-m-d H:i:s'))
-//            ->action('View Booking', url('/bookings/' . $this->booking->id))
-//            ->line('Thank you for using our application!');
+            ->subject('Booking Confirmation')
+            ->markdown('notification.booking', ['user' => $notifiable, 'booking' => $this->booking]);
     }
 
     public function toArray($notifiable)

@@ -7,7 +7,9 @@ use App\Http\Controllers\Feedback\FeedbackController;
 use App\Http\Controllers\Hotel\HotelController;
 use App\Http\Controllers\Room\RoomController;
 use App\Http\Controllers\User\UserController;
+use App\Mail\BookingMail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -69,6 +71,9 @@ Route::middleware('auth:sanctum')->group(function ()
     Route::post('hotels', [HotelController::class, 'store']);
     Route::match(['put', 'patch'],'hotels/{id}', [HotelController::class, 'update']);
     Route::delete('hotels/{id}', [HotelController::class, 'destroy']);
+//    Route::get('/', function (){
+//        Mail::to('musaevanodirabegim@gmail.com')->send(new BookingMail());
+//    });
 
 
 });
