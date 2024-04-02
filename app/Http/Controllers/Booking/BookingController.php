@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Booking\StoreBookingRequest;
 use App\Http\Requests\Booking\UpdateBookingRequest;
 use App\Models\Booking;
+use App\Notifications\BookingNotification;
 use App\Services\BookingService;
 use Illuminate\Http\JsonResponse;
 
@@ -36,6 +37,8 @@ class BookingController extends Controller
     {
         $bookingDTO = $request->validated();
         $service->createBooking(BookingDTO::fromArray($bookingDTO));
+        $user = $request->user(); // Assuming you have authentication set up
+        $user->notify(new BookingNotification());
         return response()->json(['message' => __('bookings.booking_created_success')], 201);
     }
 
