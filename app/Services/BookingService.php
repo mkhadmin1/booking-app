@@ -37,6 +37,12 @@ class BookingService
     {
         try {
             $room = Room::query()->find($bookingDTO->getRoomId());
+            if (!$room) {
+                throw new ModelNotFoundException(__('rooms.room_not_found'));
+            }
+
+            $room->is_available = 0;
+            $room->save();
 
             $checkIn = Carbon::parse($bookingDTO->getCheckIn());
             $checkOut = Carbon::parse($bookingDTO->getCheckOut());
@@ -51,7 +57,8 @@ class BookingService
             $booking->check_out = $bookingDTO->getCheckOut();
             $booking->total_price = $totalPrice;
             $booking->status = $bookingDTO->getStatus();
-            return $this->repository->createBooking($booking);
+
+            return $this->repository->saveBooking($booking);
 
         } catch (\Exception $e) {
             throw new BusinessException(__('bookings.failed_to_create_booking'));
@@ -87,8 +94,8 @@ class BookingService
         }
     }
 
-    public function cancel(int $bookingId)
+    public function rejectBooking(int $bookingId): void
     {
-        $this->repository->rejectBooking($bookingId);
+        $this->repository->cancelBooking($bookingId);
     }
 }

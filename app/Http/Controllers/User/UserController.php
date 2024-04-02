@@ -20,7 +20,6 @@ class UserController extends Controller
     public function me(UserService $service)
     {
         $user = Auth::user();
-
         return $service->getUser($user->id);
     }
 

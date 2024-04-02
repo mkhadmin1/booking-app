@@ -18,7 +18,7 @@ class BookingRepository implements IBookingRepository
 
 
 
-    public function createBooking(Booking $booking)
+    public function saveBooking(Booking $booking)
     {
         return $booking->save();
 
@@ -30,7 +30,7 @@ class BookingRepository implements IBookingRepository
 
     }
 
-    public function rejectBooking(int $bookingId)
+    public function cancelBooking(int $bookingId)
     {
         $booking = Booking::query()->find($bookingId);
         $booking->status = 'REJECTED';
