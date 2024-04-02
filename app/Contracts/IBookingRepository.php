@@ -16,7 +16,7 @@ interface IBookingRepository
     public function getBookingById(int $bookingId): ?Booking;
 
 
-    public function createBooking(Booking $booking);
+    public function saveBooking(Booking $booking);
 
 
     public function updateBooking(Booking $booking);
@@ -26,5 +26,5 @@ interface IBookingRepository
      *
      * @param int $bookingId
      */
-    public function rejectBooking(int $bookingId);
+    public function cancelBooking(int $bookingId);
 }

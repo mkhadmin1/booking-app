@@ -60,7 +60,7 @@ class BookingController extends Controller
      */
     public function reject(int $bookingId, BookingService $service): JsonResponse
     {
-        $service->cancel($bookingId);
+        $service->rejectBooking($bookingId);
         return response()->json(['message' => __('bookings.booking_rejected_success')]);
     }
 }
