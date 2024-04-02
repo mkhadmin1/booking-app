@@ -6,5 +6,6 @@ return [
     'city_updated_success' => 'Город успешно обновлен.',
     'city_deleted_success' => 'Город успешно удален.',
     'failed_to_create_city' => 'Не удалось создать город',
-    'failed_to_update_city' => 'Не удалось обновить город'
+    'failed_to_update_city' => 'Не удалось обновить город',
+    'city_exists' => 'Существующий город',
 ];

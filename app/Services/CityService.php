@@ -4,6 +4,9 @@ namespace App\Services;
 
 use App\Contracts\ICityRepository;
 use App\DTO\CityDTO;
+use App\Exceptions\BusinessException;
+use App\Exceptions\ModelAlreadyExistsException;
+use App\Exceptions\ModelNotFoundException;
 use App\Models\City;
 use Illuminate\Http\JsonResponse;
 
@@ -21,28 +24,25 @@ class CityService
         return $this->repository->getCities();
     }
 
-    public function getCity(int $cityId): ?City
+    public function getCity(int $cityId): City|null
     {
-        return $this->repository->getCityById($cityId);
+        $city = $this->repository->getCityById($cityId);
+        if (!$city) {
+            throw new ModelNotFoundException(__('cities.city_not_found'), 404);
+        }
+        return $city;
     }
 
-    public function execute(CityDTO $cityDTO): City
+    public function execute(string $name)
     {
-        return $this->repository->createCity($cityDTO);
+        $existingCity = $this->repository->createCity($name);
+        if ($existingCity) {
+            throw new ModelAlreadyExistsException(__('cities.city_exists'));
+        }
+        $city = new City();
+        $city->name = $name;
+        return $city->save();
     }
 
-    public function update(CityDTO $cityDTO, int $cityId): City
-    {
-        return $this->repository->updateCity($cityDTO, $cityId);
-    }
 
-    public function destroy(int $cityId)
-    {
-        return $this->repository->destroyCity($cityId);
-    }
-
-    public function getCityHotels(int $cityId)
-    {
-        return $this->repository->getCityHotels($cityId);
-    }
 }

@@ -6,10 +6,10 @@ class FeedbackDTO
 {
 
     public function __construct(
-        private int    $user_id,
-        private int    $hotel_id,
+        private int $user_id,
+        private int $hotel_id,
         private string $description,
-        private int    $rating)
+        private int $rating)
 
     {
     }

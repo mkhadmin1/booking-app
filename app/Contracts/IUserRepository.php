@@ -26,7 +26,7 @@ interface IUserRepository
      * @param string $email
      * @return User|null
      */
-    public function getUserByEmail(string $email): ?User;
+//    public function getUserByEmail(string $email): ?User;
 
 
 

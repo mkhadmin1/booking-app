@@ -2,7 +2,7 @@
 
 namespace App\Contracts;
 
-use App\DTO\CityDTO;
+
 use App\Models\City;
 use Illuminate\Http\JsonResponse;
 
@@ -20,23 +20,9 @@ interface ICityRepository
     public function getCityById(int $cityId): ?City;
 
     /**
-     * @param CityDTO $cityDTO
+     * @param string $name
      * @return City
      */
-    public function createCity(CityDTO $cityDTO): City;
+    public function createCity(string $name);
 
-    /**
-     * @param CityDTO $cityDTO
-     * @param int $id
-     * @return City
-     */
-    public function updateCity(CityDTO $cityDTO, int $id): City;
-
-    /**
-     * @param int $cityId
-     * @return mixed
-     */
-    public function destroyCity(int $cityId);
-
-    public function getCityHotels(int $cityId);
 }

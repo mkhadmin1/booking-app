@@ -6,5 +6,6 @@ return [
     'city_updated_success' => 'City updated successfully.',
     'city_deleted_success' => 'City deleted successfully.',
     'failed_to_create_city' => 'Failed to create city',
-    'failed_to_update_city' => 'Failed to update city'
+    'failed_to_update_city' => 'Failed to update city',
+    'city_exists' => 'Existing city',
 ];
