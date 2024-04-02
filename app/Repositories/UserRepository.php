@@ -18,10 +18,6 @@ class UserRepository implements IUserRepository
 
     public function getUserByID(int $userId)
     {
-        $user = User::query()->find($userId);
-        if (!$user) {
-            throw new ModelNotFoundException(__('users.user_not_found'));
-        }
         return User::query()
             ->with(['bookings', 'feedbacks'])
             ->where('id', $userId)->first();
@@ -36,19 +32,15 @@ class UserRepository implements IUserRepository
      */
     public function createUser(UserDTO $userDTO)
     {
-        $existingUser = User::where('email', $userDTO->getEmail())->first();
-        return $existingUser;
+        return User::where('email', $userDTO->getEmail())->first();
 
     }
 
-    public function getUserByEmail(string $email): ?User
-    {
-        $user = User::query()->where('email', $email)->first();
-        if (!$user) {
-            throw new ModelNotFoundException(__('users.user_not_found'));
-        }
-        /** @var User $user */
-        return $user;
-    }
+//    public function getUserByEmail(string $email): ?User
+//    {
+//        $user = User::query()->where('email', $email)->first();
+//
+//        return $user;
+//    }
 
 }

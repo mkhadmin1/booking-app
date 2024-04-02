@@ -41,7 +41,6 @@ class BookingFactory extends Factory
         return [
             'user_id' => User::factory()->create()->id,
             'room_id' => Room::factory()->create()->id,
-            'hotel_id' => Hotel::factory()->create()->id,
             'check_in' => $checkIn,
             'check_out' => $checkOut,
             'total_price' => $this->faker->randomFloat(2, 50, 500),

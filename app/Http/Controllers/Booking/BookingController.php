@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Booking;
 
 use App\DTO\BookingDTO;
+use App\Exceptions\BusinessException;
+use App\Exceptions\ModelNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Booking\StoreBookingRequest;
 use App\Http\Requests\Booking\UpdateBookingRequest;
@@ -12,19 +14,12 @@ use Illuminate\Http\JsonResponse;
 
 class BookingController extends Controller
 {
-    /**
-     * @param BookingService $service
-     * @return JsonResponse
-     */
-    public function index(BookingService $service): JsonResponse
-    {
-        return $service->getAllBookings();
-    }
 
     /**
      * @param int $bookingId
      * @param BookingService $service
      * @return Booking
+     * @throws ModelNotFoundException
      */
     public function show(int $bookingId, BookingService $service): Booking
     {
@@ -35,6 +30,7 @@ class BookingController extends Controller
      * @param StoreBookingRequest $request
      * @param BookingService $service
      * @return JsonResponse
+     * @throws BusinessException
      */
     public function store(StoreBookingRequest $request, BookingService $service)
     {
@@ -48,6 +44,8 @@ class BookingController extends Controller
      * @param int $bookingId
      * @param BookingService $service
      * @return JsonResponse
+     * @throws BusinessException
+     * @throws ModelNotFoundException
      */
     public function update(UpdateBookingRequest $request, int $bookingId, BookingService $service): JsonResponse
     {
@@ -60,9 +58,9 @@ class BookingController extends Controller
      * @param BookingService $service
      * @return JsonResponse
      */
-    public function destroy(int $bookingId, BookingService $service): JsonResponse
+    public function reject(int $bookingId, BookingService $service): JsonResponse
     {
-        $service->destroyBooking($bookingId);
-        return response()->json(['message' => __('bookings.booking_deleted_success')]);
+        $service->cancel($bookingId);
+        return response()->json(['message' => __('bookings.booking_rejected_success')]);
     }
 }

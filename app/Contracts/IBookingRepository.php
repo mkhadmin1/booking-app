@@ -8,38 +8,23 @@ use Illuminate\Http\JsonResponse;
 
 interface IBookingRepository
 {
-    /**@return JsonResponse */
-    public function getBookings(): JsonResponse;
 
     /**
-     * Get booking by ID.
-     *
      * @param int $bookingId
      * @return Booking|null
      */
     public function getBookingById(int $bookingId): ?Booking;
 
-    /**
-     * Create a new booking.
-     *
-     * @param BookingDTO $bookingDTO
-     * @return Booking
-     */
-    public function createBooking(BookingDTO $bookingDTO): Booking;
 
-    /**
-     * Update an existing booking.
-     *
-     * @param BookingDTO $bookingDTO
-     * @param int $bookingId
-     * @return Booking
-     */
-    public function updateBooking(BookingDTO $bookingDTO, int $bookingId): Booking;
+    public function createBooking(Booking $booking);
+
+
+    public function updateBooking(Booking $booking);
 
     /**
      * Delete a booking.
      *
      * @param int $bookingId
      */
-    public function destroyBooking(int $bookingId);
+    public function rejectBooking(int $bookingId);
 }

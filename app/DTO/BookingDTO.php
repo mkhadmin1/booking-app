@@ -5,13 +5,11 @@ namespace App\DTO;
 class BookingDTO
 {
     public function __construct(
-        private readonly string $userId,
-        private readonly string $roomId,
-        private readonly string $hotelId,
-        private readonly string $checkIn,
-        private readonly string $checkOut,
-        private readonly float  $totalPrice,
-        private readonly string $status = 'NEW'
+        private string $userId,
+        private string $roomId,
+        private string $checkIn,
+        private string $checkOut,
+        private string $status = 'NEW'
     ) {
     }
 
@@ -25,11 +23,6 @@ class BookingDTO
         return $this->roomId;
     }
 
-    public function getHotelId(): string
-    {
-        return $this->hotelId;
-    }
-
     public function getCheckIn(): string
     {
         return $this->checkIn;
@@ -38,11 +31,6 @@ class BookingDTO
     public function getCheckOut(): string
     {
         return $this->checkOut;
-    }
-
-    public function getTotalPrice(): float
-    {
-        return $this->totalPrice;
     }
 
     public function getStatus(): string
@@ -55,10 +43,8 @@ class BookingDTO
         return new static(
             userId: $data['user_id'],
             roomId: $data['room_id'],
-            hotelId: $data['hotel_id'],
             checkIn: $data['check_in'],
             checkOut: $data['check_out'],
-            totalPrice: $data['total_price'],
             status: $data['status'] ?? 'NEW'
         );
     }

@@ -25,19 +25,20 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
+//User/Auth
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
 
-Route::middleware('auth:sanctum')->group(function (){
+Route::middleware('auth:sanctum')->group(function ()
+{
 
+//User/Auth
     Route::post('logout', [AuthController::class, 'logout']);
-
-
     Route::get('me', [UserController::class, 'me']);
 
 //Feedbacks
-    Route::get('feedbacks', [FeedbackController::class, 'index']);
+
     Route::get('feedbacks/{id}', [FeedbackController::class, 'show']);
     Route::post('feedbacks', [FeedbackController::class, 'store']);
     Route::put('feedbacks/{id}', [FeedbackController::class, 'update']);
@@ -48,9 +49,6 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::get('/cities', [CityController::class, 'index']);
     Route::get('/cities/{id}', [CityController::class, 'show']);
     Route::post('/cities', [CityController::class, 'store']);
-    Route::put('/cities/{id}', [CityController::class, 'update']);
-    Route::delete('/cities/{id}', [CityController::class, 'destroy']);
-    Route::get('/cities/{id}/hotels', [CityController::class, 'showCityHotels']);
 
 //Rooms
     Route::get('/rooms', [RoomController::class, 'index']);
@@ -60,11 +58,10 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::delete('/rooms/{id}', [RoomController::class, 'destroy']);
 
 //Bookings
-    Route::get('bookings', [BookingController::class, 'index']);
     Route::get('bookings/{id}', [BookingController::class, 'show']);
     Route::post('bookings', [BookingController::class, 'store']);
     Route::match(['put', 'patch'],'bookings/{id}', [BookingController::class, 'update']);
-    Route::delete('bookings/{id}', [BookingController::class, 'destroy']);
+    Route::post('bookings/{id}/reject', [BookingController::class, 'reject']);
 
 // Hotels
     Route::get('hotels', [HotelController::class, 'index']);
@@ -72,7 +69,6 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::post('hotels', [HotelController::class, 'store']);
     Route::match(['put', 'patch'],'hotels/{id}', [HotelController::class, 'update']);
     Route::delete('hotels/{id}', [HotelController::class, 'destroy']);
-    Route::get('hotels/{id}/feedbacks', [HotelController::class, 'showHotelFeedbacks']);
-    Route::get('hotels/{id}/available-rooms', [HotelController::class, 'getAvailableRooms']);
+
 
 });
