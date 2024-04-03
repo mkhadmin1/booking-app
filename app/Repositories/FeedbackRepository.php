@@ -10,47 +10,23 @@ use App\Models\Feedback;
 use Illuminate\Http\JsonResponse;
 
 class FeedbackRepository implements IFeedbackRepository
+
 {
-    /**
-     * @return JsonResponse
-     */
-    public function getFeedbacks(): JsonResponse
-    {
-        /** @var array $feedbacks */
-        $feedbacks = Feedback::all();
-
-        return response()->json([
-            'data' => $feedbacks
-        ]);
-    }
-
     public function getFeedbackById(int $feedbackId): ?Feedback
     {
 
-        $feedback = Feedback::find($feedbackId);
-        if (!$feedback) {
-            throw new ModelNotFoundException(__('feedbacks.feedback_not_found'));
-        }
-        return $feedback;
+        return Feedback::find($feedbackId);
     }
 
     /**
      * @param FeedbackDTO $feedbackDTO
      * @return Feedback
+     * @throws BusinessException
      */
-    public function createFeedback(FeedbackDTO $feedbackDTO): Feedback
+    public function createFeedback($feedback): Feedback
     {
-        try {
-            $feedback = new Feedback();
-            $feedback->user_id = $feedbackDTO->getUserId();
-            $feedback->hotel_id = $feedbackDTO->getHotelId();
-            $feedback->description = $feedbackDTO->getDescription();
-            $feedback->rating = $feedbackDTO->getRating();
-            $feedback->save();
-            return $feedback;
-        }  catch (\Exception $e) {
-            throw new BusinessException(__('feedbacks.failed_to_create_feedback'));
-        }
+        $feedback->save();
+        return $feedback;
     }
 
     /**
@@ -59,23 +35,10 @@ class FeedbackRepository implements IFeedbackRepository
      * @return Feedback
      * @throws ModelNotFoundException
      */
-    public function updateFeedback(FeedbackDTO $feedbackDTO, int $feedbackId): Feedback
+    public function updateFeedback($feedbackId): Feedback
     {
-        $feedback = Feedback::find($feedbackId);
-        if (!$feedback) {
-            throw new ModelNotFoundException(__('feedbacks.feedback_not_found'));
-        }
-        try {
-            $feedback->user_id = $feedbackDTO->getUserId();
-            $feedback->hotel_id = $feedbackDTO->getHotelId();
-            $feedback->description = $feedbackDTO->getDescription();
-            $feedback->rating = $feedbackDTO->getRating();
-            $feedback->update();
-            return $feedback;
+        return Feedback::find($feedbackId);
 
-        }  catch (\Exception $e) {
-            throw new BusinessException(__('feedbacks.failed_to_create_feedback'));
-        }
     }
 
     /**

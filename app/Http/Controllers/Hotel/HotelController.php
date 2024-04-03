@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Hotel;
 
 use App\DTO\HotelDTO;
+use App\Exceptions\BusinessException;
+use App\Exceptions\ModelNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Hotel\StoreHotelRequest;
 use App\Http\Requests\Hotel\UpdateHotelRequest;
@@ -26,7 +28,7 @@ class HotelController extends Controller
      * @param HotelService $service
      * @return Hotel
      */
-    public function show(int $hotelId, HotelService $service): Hotel
+    public function show(int $hotelId, HotelService $service)
     {
         return $service->getHotelById($hotelId);
     }
@@ -48,6 +50,8 @@ class HotelController extends Controller
      * @param int $hotelId
      * @param HotelService $service
      * @return JsonResponse
+     * @throws BusinessException
+     * @throws ModelNotFoundException
      */
     public function update(UpdateHotelRequest $request, int $hotelId, HotelService $service): JsonResponse
     {
@@ -55,35 +59,11 @@ class HotelController extends Controller
         return response()->json(['message' => __('hotels.hotel_updated_success')]);
     }
 
-    /**
-     * @param int $hotelId
-     * @param HotelService $service
-     * @return JsonResponse
-     */
+
     public function destroy(int $hotelId, HotelService $service): JsonResponse
     {
-        $service->destroyHotel($hotelId);
+        $service->deleteHotel($hotelId);
         return response()->json(['message' => __('hotels.hotel_deleted_success')]);
     }
 
-    /**
-     * @param HotelService $service
-     * @param int $hotelId
-     * @return mixed
-     */
-    public function showHotelFeedbacks(HotelService $service, int $hotelId)
-    {
-        return $service->getHotelFeedbacks($hotelId);
-    }
-
-    /**
-     * @param HotelService $service
-     * @param int $hotelId
-     * @return JsonResponse
-     */
-    public function getAvailableRooms(HotelService $service, int $hotelId): JsonResponse
-    {
-        $rooms = $service->getAvailableRooms($hotelId);
-        return response()->json($rooms);
-    }
 }

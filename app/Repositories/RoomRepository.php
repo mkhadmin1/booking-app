@@ -12,91 +12,25 @@ use Illuminate\Http\JsonResponse;
 
 class RoomRepository implements IRoomRepository
 {
-    /**
-     * @return JsonResponse
-     */
-    public function getRooms(): JsonResponse
-    {
-        $rooms = Room::all();
-        return response()->json(['data' => $rooms]);
-    }
 
-    /**
-     * @param int $roomId
-     * @return RoomResource
-     * @throws ModelNotFoundException
-     */
-    public function getRoomById(int $roomId): RoomResource
+
+    public function getRoomById(int $roomId)
     {
         $room = Room::query()->find($roomId);
-        if (!$room) {
-            throw new ModelNotFoundException(__('rooms.room_not_found'));
-        }
-        return new RoomResource($room);
+        return $room;
     }
 
-    /**
-     * Создает новую комнату.
-     *
-     * @param RoomDTO $roomDTO
-     * @return RoomResource
-     * @throws BusinessException
-     */
-    public function createRoom(RoomDTO $roomDTO): RoomResource
-    {
-        try {
-            $room = new Room();
-            $room->hotel_id = $roomDTO->getHotelId();
-            $room->room_number = $roomDTO->getRoomNumber();
-            $room->type = $roomDTO->getType();
-            $room->capacity = $roomDTO->getCapacity();
-            $room->price_per_night = $roomDTO->getPricePerNight();
 
-            $room->save();
-            return new RoomResource($room);
-        } catch (\Exception $e) {
-            throw new BusinessException(__('rooms.failed_to_create_room'));
-        }
+    public function saveRoom(Room $room)
+    {
+        $room->save();
     }
 
-    /**
-     * @param int $roomId
-     * @param RoomDTO $roomDTO
-     * @return Room
-     * @throws BusinessException
-     * @throws ModelNotFoundException
-     */
-    public function updateRoom(int $roomId, RoomDTO $roomDTO)
-    {
-        $room = Room::find($roomId);
-        if (!$room) {
-            throw new ModelNotFoundException(__('rooms.room_not_found'));
-        }
 
-        try {
-            $room->hotel_id = $roomDTO->getHotelId();
-            $room->room_number = $roomDTO->getRoomNumber();
-            $room->type = $roomDTO->getType();
-            $room->capacity = $roomDTO->getCapacity();
-            $room->price_per_night = $roomDTO->getPricePerNight();
-            $room->save();
-            return $room;
-        } catch (\Exception $e) {
-            throw new BusinessException(__('rooms.failed_to_update_room'));
-        }
-    }
 
-    /**
-     * @param int $roomId
-     * @return void
-     * @throws ModelNotFoundException
-     */
-    public function destroyRoom(int $roomId): void
+    public function destroyRoom(Room $room)
     {
-        $room = Room::query()->find($roomId);
-        if (!$room) {
-            throw new ModelNotFoundException(__('rooms.room_not_found'));
-        }
-        $room->delete();
+
+        return $room->delete();
     }
 }

@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Contracts\IHotelRepository;
 use App\DTO\HotelDTO;
+use App\Exceptions\BusinessException;
+use App\Exceptions\ModelNotFoundException;
 use App\Models\Hotel;
 use Illuminate\Http\JsonResponse;
 
@@ -21,34 +23,64 @@ class HotelService
         return $this->repository->getHotels();
     }
 
-    public function getHotelById(int $hotelId): ?Hotel
+    public function getHotelById(int $hotelId)
     {
-        return $this->repository->getHotelById($hotelId);
+        $hotel = $this->repository->getHotelById($hotelId);
+        if (!$hotel) {
+            throw new ModelNotFoundException(__('hotels.hotel_not_found'));
+        }
+        return $hotel;
     }
 
     public function createHotel(HotelDTO $hotelDTO): Hotel
     {
-        return $this->repository->createHotel($hotelDTO);
+        try {
+        $hotel = new Hotel();
+        $hotel->name = $hotelDTO->getName();
+        $hotel->description = $hotelDTO->getDescription();
+        $hotel->address = $hotelDTO->getAddress();
+        $hotel->phone = $hotelDTO->getPhone();
+        $hotel->email = $hotelDTO->getEmail();
+        $hotel->city_id = $hotelDTO->getCityId();
+        $hotel->rating = $hotelDTO->getRating();
+        $hotel->manage_id = $hotelDTO->getManagerId();
+        return $this->repository->saveHotel($hotel);
+
+    } catch (\Exception $e) {
+        throw new BusinessException(__('hotels.failed_to_create_hotel'));
+    }
+
     }
 
     public function updateHotel(HotelDTO $hotelDTO, int $hotelId): Hotel
     {
-        return $this->repository->updateHotel($hotelDTO, $hotelId);
+        $hotel = Hotel::query()->find($hotelId);
+        if (!$hotel) {
+            throw new ModelNotFoundException(__('hotels.hotel_not_found'));
+        }
+
+        try {
+            $hotel->name = $hotelDTO->getName();
+            $hotel->description = $hotelDTO->getDescription();
+            $hotel->address = $hotelDTO->getAddress();
+            $hotel->phone = $hotelDTO->getPhone();
+            $hotel->email = $hotelDTO->getEmail();
+            $hotel->city_id = $hotelDTO->getCityId();
+            $hotel->rating = $hotelDTO->getRating();
+            $hotel->manager_id = $hotelDTO->getManagerId();
+            return $this->repository->saveHotel($hotel);
+        } catch (\Exception $e) {
+            throw new BusinessException(__('hotels.failed_to_update_hotel'));
+        }
     }
 
-    public function destroyHotel(int $hotelId)
+    public function deleteHotel(int $hotelId)
     {
-        $this->repository->destroyHotel($hotelId);
+        $hotel = Hotel::query()->find($hotelId);
+        if (!$hotel) {
+            throw new ModelNotFoundException(__('hotels.hotel_not_found'));
+        }
+        return $this->repository->destroyHotel($hotel);
     }
 
-    public function getHotelFeedbacks(int $hotelId)
-    {
-        return $this->repository->getHotelFeedbacks($hotelId);
-
-    }
-
-    public function getAvailableRooms(int $hotelId)
-    {
-        return $this->repository->getAvailableRooms($hotelId);
-    }
 }
