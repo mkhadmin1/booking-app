@@ -37,6 +37,7 @@ class BookingFactory extends Factory
         while ($checkOut <= $checkIn) {
             $checkOut = $this->faker->dateTimeBetween($checkIn, $endDate);
         }
+        $lastReminderSentAt = $this->faker->dateTimeBetween($startDate, 'now');
 
         return [
             'user_id' => User::factory()->create()->id,
@@ -47,6 +48,7 @@ class BookingFactory extends Factory
             'status' => 'NEW',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
+            'last_reminder_sent_at' => $lastReminderSentAt,
         ];
     }
 }

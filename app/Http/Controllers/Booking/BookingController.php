@@ -40,7 +40,7 @@ class BookingController extends Controller
     {
         $bookingDTO = $request->validated();
         $service->createBooking(BookingDTO::fromArray($bookingDTO));
-        $user = $request->user(); // Assuming you have authentication set up
+        $user = $request->user();
         $user->notify(new BookingNotification(5));
         return response()->json(['message' => __('bookings.booking_created_success')], 201);
     }
