@@ -8,10 +8,6 @@ use Illuminate\Http\JsonResponse;
 
 interface ICityRepository
 {
-    /**
-     * @return JsonResponse
-     */
-    public function getCities(): JsonResponse;
 
     /**
      * @param int $cityId

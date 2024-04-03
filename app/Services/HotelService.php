@@ -18,10 +18,6 @@ class HotelService
         $this->repository = $repository;
     }
 
-    public function getAllHotels(): JsonResponse
-    {
-        return $this->repository->getHotels();
-    }
 
     public function getHotelById(int $hotelId)
     {

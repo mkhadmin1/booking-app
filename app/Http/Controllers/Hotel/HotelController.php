@@ -11,33 +11,35 @@ use App\Http\Requests\Hotel\UpdateHotelRequest;
 use App\Models\Hotel;
 use App\Services\HotelService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class HotelController extends Controller
 {
-    /**
-     * @param HotelService $service
-     * @return JsonResponse
-     */
-    public function index(HotelService $service)
+    public function index(Request $request)
     {
-        return $service->getAllHotels();
+        $this->validate($request, [
+            'per_page' => 'required|int',
+            'q' => 'nullable|string'
+        ]);
+
+        $hotels = Hotel::query();
+
+        if ($request->query('q') != null) {
+            $hotels->where('name', 'like', '%' . $request->query('q') . '%');
+        }
+
+        $hotels = $hotels->paginate($request->query('per_page'));
+
+        return response()->json(['data' => $hotels]);
     }
 
-    /**
-     * @param int $hotelId
-     * @param HotelService $service
-     * @return Hotel
-     */
+
     public function show(int $hotelId, HotelService $service)
     {
         return $service->getHotelById($hotelId);
     }
 
-    /**
-     * @param StoreHotelRequest $request
-     * @param HotelService $service
-     * @return JsonResponse
-     */
+
     public function store(StoreHotelRequest $request, HotelService $service)
     {
         $hotelDTO = $request->validated();
@@ -45,14 +47,6 @@ class HotelController extends Controller
         return response()->json(['message' => __('hotels.hotel_created_success')], 201);
     }
 
-    /**
-     * @param UpdateHotelRequest $request
-     * @param int $hotelId
-     * @param HotelService $service
-     * @return JsonResponse
-     * @throws BusinessException
-     * @throws ModelNotFoundException
-     */
     public function update(UpdateHotelRequest $request, int $hotelId, HotelService $service): JsonResponse
     {
         $service->updateHotel(HotelDTO::fromArray($request->validated()), $hotelId);

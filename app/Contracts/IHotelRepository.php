@@ -8,7 +8,6 @@ use Illuminate\Http\JsonResponse;
 
 interface IHotelRepository
 {
-    public function getHotels(): JsonResponse;
 
     public function getHotelById(int $hotelId);
 
