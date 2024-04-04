@@ -10,6 +10,8 @@ use App\Models\City;
 use App\Services\CityService;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class CityController extends Controller
 {
@@ -21,13 +23,15 @@ class CityController extends Controller
             'q' => 'nullable|string'
         ]);
 
-        $cities = City::query();
+        $cities = Cache::remember('city_index', 300, function () use ($request) {
+            $query = City::query();
 
-        if ($request->query('q') != null) {
-            $cities->where('name', '=', $request->query('q'));
-        }
+            if ($request->query('q') != null) {
+                $query->where('name', '=', $request->query('q'));
+            }
 
-        $cities = $cities->paginate($request->query('per_page'));
+            return $query->paginate($request->query('per_page'));
+        });
 
         return response()->json(['data' => $cities]);
     }
