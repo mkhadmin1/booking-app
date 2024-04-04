@@ -8,11 +8,6 @@ use Illuminate\Http\JsonResponse;
 
 class CityRepository implements ICityRepository
 {
-    public function getCities(): JsonResponse
-    {
-        $cities = City::all();
-        return response()->json(['data' => $cities]);
-    }
 
     /**
      * @param int $cityId

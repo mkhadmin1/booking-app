@@ -24,11 +24,6 @@ class BookingRepository implements IBookingRepository
 
     }
 
-    public function updateBooking(Booking $booking)
-    {
-        return $booking->save();
-
-    }
 
     public function cancelBooking(int $bookingId)
     {

@@ -19,10 +19,6 @@ class CityService
         $this->repository = $repository;
     }
 
-    public function getAllCities(): JsonResponse
-    {
-        return $this->repository->getCities();
-    }
 
     public function getCity(int $cityId): City|null
     {
