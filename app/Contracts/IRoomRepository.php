@@ -10,13 +10,9 @@ use Illuminate\Http\JsonResponse;
 interface IRoomRepository
 {
 
-    public function getRooms(): JsonResponse;
+    public function getRoomById(int $roomId);
 
-    public function getRoomById(int $roomId): ?RoomResource;
+    public function saveRoom(Room $room);
 
-    public function createRoom(RoomDTO $roomDTO): ?RoomResource;
-
-    public function updateRoom(int $roomId, RoomDTO $roomDTO);
-
-    public function destroyRoom(int $roomId);
+    public function destroyRoom(Room $room);
 }

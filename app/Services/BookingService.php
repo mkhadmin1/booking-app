@@ -87,7 +87,7 @@ class BookingService
             $booking->check_out = $bookingDTO->getCheckOut();
             $booking->total_price = $totalPrice;
             $booking->status = $bookingDTO->getStatus();
-            return $this->repository->updateBooking($booking);
+            return $this->repository->saveBooking($booking);
 
         } catch (\Exception $e) {
             throw new BusinessException(__('bookings.failed_to_update_booking'));

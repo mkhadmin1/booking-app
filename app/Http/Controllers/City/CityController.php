@@ -8,17 +8,28 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\City\StoreCityRequest;
 use App\Models\City;
 use App\Services\CityService;
+use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
 class CityController extends Controller
 {
-    /**
-     * @param CityService $service
-     * @return JsonResponse
-     */
-    public function index(CityService $service): JsonResponse
+
+    public function index(Request $request)
     {
-        return $service->getAllCities();
+        $this->validate($request, [
+            'per_page' => 'required|int',
+            'q' => 'nullable|string'
+        ]);
+
+        $cities = City::query();
+
+        if ($request->query('q') != null) {
+            $cities->where('name', 'like', '%' . $request->query('q') . '%');
+        }
+
+        $cities = $cities->paginate($request->query('per_page'));
+
+        return response()->json(['data' => $cities]);
     }
 
     /**

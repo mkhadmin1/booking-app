@@ -9,14 +9,11 @@ use Illuminate\Http\JsonResponse;
 interface IBookingRepository
 {
 
-    /**
-     * @param int $bookingId
-     * @return Booking|null
-     */
     public function getBookingById(int $bookingId): ?Booking;
 
 
     public function saveBooking(Booking $booking);
+
 
 
     public function updateBooking(Booking $booking);
@@ -26,5 +23,6 @@ interface IBookingRepository
      *
      * @param int $bookingId
      */
+
     public function cancelBooking(int $bookingId);
 }

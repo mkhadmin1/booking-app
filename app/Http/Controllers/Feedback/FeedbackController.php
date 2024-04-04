@@ -12,19 +12,11 @@ use Illuminate\Http\JsonResponse;
 
 class FeedbackController extends Controller
 {
-    /**
-     * @param FeedbackService $service
-     * @return JsonResponse
-     */
-    public function index(FeedbackService $service): JsonResponse
-    {
-        return $service->getAllFeedbacks();
-    }
 
     /**
      * @param int $feedbackId
      * @param FeedbackService $service
-     * @return \App\Models\Feedback
+     * @return Feedback
      */
     public function show(int $feedbackId, FeedbackService $service): Feedback
     {
@@ -62,7 +54,7 @@ class FeedbackController extends Controller
      */
     public function destroy(FeedbackService $service, int $feedbackId): JsonResponse
     {
-        $service->destroy($feedbackId);
+        $service->deleteFeedback($feedbackId);
         return response()->json(['message' => __('feedbacks.feedback_deleted_success')], 201);
     }
 }
