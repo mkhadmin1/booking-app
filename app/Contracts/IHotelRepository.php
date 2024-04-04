@@ -8,9 +8,7 @@ use Illuminate\Http\JsonResponse;
 
 interface IHotelRepository
 {
-
-    public function getHotelById(int $hotelId);
-
+    public function getHotelById(int $hotelId): Hotel|null;
 
     public function saveHotel(Hotel $hotel);
 

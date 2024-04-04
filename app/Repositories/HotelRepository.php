@@ -8,13 +8,13 @@ use App\Exceptions\BusinessException;
 use App\Exceptions\ModelNotFoundException;
 use App\Models\Hotel;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Database\Eloquent\Model;
 
 class HotelRepository implements IHotelRepository
 {
-
-    public function getHotelById(int $hotelId)
+    public function getHotelById(int $hotelId): Hotel|null
     {
+        /** @var Hotel $hotel */
         $hotel = Hotel::query()
             ->with(['feedbacks', 'rooms'])
             ->where('id', $hotelId)
@@ -23,14 +23,10 @@ class HotelRepository implements IHotelRepository
             })
             ->first();
 
-       return $hotel;
+        return $hotel;
     }
 
-    /**
-     * @param HotelDTO $hotelDTO
-     * @return Hotel
-     * @throws BusinessException
-     */
+
     public function saveHotel(Hotel $hotel)
     {
         $hotel->save();

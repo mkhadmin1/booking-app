@@ -24,7 +24,7 @@ class CityController extends Controller
         $cities = City::query();
 
         if ($request->query('q') != null) {
-            $cities->where('name', 'like', '%' . $request->query('q') . '%');
+            $cities->where('name', '=', $request->query('q'));
         }
 
         $cities = $cities->paginate($request->query('per_page'));
@@ -32,11 +32,7 @@ class CityController extends Controller
         return response()->json(['data' => $cities]);
     }
 
-    /**
 
-     * @param CityService $service
-     * @return JsonResponse
-     */
     public function store(StoreCityRequest $request, CityService $service)
     {
         $service->execute($request->name);

@@ -20,19 +20,14 @@ class Hotel extends Model
         'rating',
         'manager_id',
     ];
-
-
     public function city(): BelongsTo
     {
         return $this->belongsTo(City::class);
     }
-
-
     public function rooms(): HasMany
     {
         return $this->hasMany(Room::class);
     }
-
     public function feedbacks(): HasMany
     {
         return $this->hasMany(Feedback::class);
