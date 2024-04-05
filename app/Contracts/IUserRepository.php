@@ -20,7 +20,7 @@ interface IUserRepository
      * @param UserDTO $userDTO
      * @return User
      */
-    public function createUser(UserDTO $userDTO);
+    public function findByEmail(string $email);
 
     /**
      * @param string $email

@@ -30,10 +30,9 @@ class UserRepository implements IUserRepository
      * @return User
      * @throws ModelAlreadyExistsException if the user with the same email already exists
      */
-    public function createUser(UserDTO $userDTO)
+    public function findByEmail(string $email)
     {
-        return User::where('email', $userDTO->getEmail())->first();
-
+        return User::where('email', $email)->first();
     }
 
 //    public function getUserByEmail(string $email): ?User
