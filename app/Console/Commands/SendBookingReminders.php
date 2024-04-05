@@ -17,13 +17,20 @@ class SendBookingReminders extends Command
 
     public function handle()
     {
-        // Get all bookings that are scheduled a week from now and have not been sent a reminder yet
-        $bookings = Booking::query()->where('check_in', Carbon::now()->addWeek())
+
+
+        $currentDateTime = Carbon::now();
+
+        $formattedDateTime = $currentDateTime->format('Y-m-d H:i:s');
+
+        echo $formattedDateTime;
+
+        $bookings = Booking::query()
+            ->whereDate('check_in', '=', Carbon::now()->addWeek()->toDateString())
             ->whereNull('last_reminder_sent_at')
             ->get();
-        //dd($bookings);
 
-        // Loop through each booking and send a reminder
+
         foreach ($bookings as $booking) {
             Notification::send($booking->user, new BookingReminderNotification($booking));
             $booking->last_reminder_sent_at = Carbon::now();
