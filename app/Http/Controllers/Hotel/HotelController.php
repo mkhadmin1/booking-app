@@ -25,7 +25,7 @@ class HotelController extends Controller
         $hotels = Hotel::query();
 
         if ($request->query('q') != null) {
-            $hotels->where('name', 'like', '%' . $request->query('q') . '%');
+            $hotels->where('name', '=', $request->query('q'));
         }
 
         $hotels = $hotels->paginate($request->query('per_page'));
@@ -33,12 +33,13 @@ class HotelController extends Controller
         return response()->json(['data' => $hotels]);
     }
 
-
+    /**
+     * @throws ModelNotFoundException
+     */
     public function show(int $hotelId, HotelService $service)
     {
-        return $service->getHotelById($hotelId);
+        return $service->getHotel($hotelId);
     }
-
 
     public function store(StoreHotelRequest $request, HotelService $service)
     {
