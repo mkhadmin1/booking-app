@@ -23,7 +23,7 @@ class BookingNotification extends Notification
     {
         return (new MailMessage)
             ->subject('Booking Confirmation')
-            ->markdown('notification.booking', ['user' => $notifiable, 'booking' => $this->booking]);
+            ->markdown('notification.booking');
     }
 
     public function toArray($notifiable)
