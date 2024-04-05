@@ -35,25 +35,20 @@ class UserService
 
     public function createUser(UserDTO $userDTO)
     {
-        $existingUser = $this->repository->createUser($userDTO);
-        if ($existingUser) {
+        $existingUser = $this->repository->findByEmail($userDTO->getEmail());
+        if ($existingUser === null) {
             throw new ModelAlreadyExistsException(__('users.user_already_exists'));
         }
-        try {
-            $user = new User();
-            $user->name = $userDTO->getName();
-            $user->email = $userDTO->getEmail();
-            $user->password = Hash::make($userDTO->getPassword());
-            $user->save();
 
-            $token = $user->createToken('auth_token')->plainTextToken;
+        $user = new User();
+        $user->name = $userDTO->getName();
+        $user->email = $userDTO->getEmail();
+        $user->password = Hash::make($userDTO->getPassword());
+        $user->save();
 
-            return response()->json(['token' => $token, 'user' => new UserResource($user)], 201);
+        $token = $user->createToken('auth_token')->plainTextToken;
 
-
-        } catch (\Exception $e) {
-            throw new BusinessException(__('users.failed_to_create_user'));
-        }
+        return response()->json(['token' => $token, 'user' => new UserResource($user)], 201);
     }
 
     public function login(LoginUserRequest $request)
