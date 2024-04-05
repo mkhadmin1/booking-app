@@ -19,7 +19,7 @@ class HotelService
     }
 
 
-    public function getHotelById(int $hotelId)
+    public function getHotel(int $hotelId)
     {
         $hotel = $this->repository->getHotelById($hotelId);
         if (!$hotel) {
